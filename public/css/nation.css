@@ -1,0 +1,132 @@
+
+body{
+    background-color: rgb(0, 0, 10);
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    padding: 0px;
+    margin: 0%;
+}
+
+section{
+    height: 25vh;
+}
+
+
+.navbar{
+    background-color: rgb(0, 0, 15);
+}
+
+.country-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+}
+
+.countryholder{
+    width: 150px;
+    border-radius: 25px;
+    border-color: white;
+    border-width: 26px;
+}
+
+.countryholder img {
+    height: 50%;
+    width: 100%;
+}
+
+.countryholder a {
+    font-size: 1em;    
+    font-weight: bold;    
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: block;
+    color: white;
+    transition: 0.7s ease-in-out;
+    text-decoration: none;
+
+}
+
+.countryholder a:hover{
+    color: #CF0F47;
+}
+
+.NationBtn{
+    border-color: #CF0F47;
+    color: #CF0F47 ;
+    transition: 1s;
+}
+
+.NationBtn:hover{
+    background-color: #CF0F47;
+    color: black;
+}
+
+#info-banner{
+    border-radius: 25px;
+    background-color: rgb(207, 15, 71);
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    padding: 2.5%;
+}
+
+.form-country{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 6rem; 
+}
+
+.form-country div {
+    background-color: #5D0E41;
+    border-radius: 50px;
+}
+
+.form-country form {
+    width: 50%;
+    padding: 4rem;
+}
+
+#second-row{
+    height: 50px;
+}
+.navbar a{
+        color:white;
+        text-shadow: 0 1px 0 black;
+}
+
+.navbar a:hover{
+    color:#CF0F47;
+    text-shadow:
+    -1px -1px 0 black, /* Top-left shadow */
+    1px -1px 0 black,  /* Top-right shadow */
+    -1px 1px 0 black,  /* Bottom-left shadow */
+    1px 1px 0 black;   /* Bottom-right shadow */
+    transition: 1s;
+}
+
+
+.graph-container{
+    border-color: #CF0F47;
+    border-width: 10%;
+    background-color: rgb(0, 0, 15);
+    padding: 10px;
+    border: #CF0F47 solid 1.5px;
+    border-radius: 25px ;
+    position: relative;
+    width: 50%;
+}
+
+.nation-summary{
+    background-color: rgb(0, 0, 15);
+    color: white;
+}
+.nation-page-flag{
+    border-radius: 5px;
+}
+.depressed-font{
+    text-shadow: 0 1px 0 black;
+}
+

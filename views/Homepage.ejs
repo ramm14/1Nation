@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/nation.css" >
+    <title>1Nation</title>
+</head>
+<body >
+    <header>
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div>
+                    <a class="font-group-black-red navbar-brand">1Nation</a>
+                    <svg viewBox="0 0 24 24"  class="me-5"    height="6%" width="6%"fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#CF0F47"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13.1427 20.9999C10.8077 19.5438 9.25254 16.9522 9.25254 13.9968C9.25254 12.4783 10.4833 11.2476 12.0008 11.2476C13.5184 11.2476 14.7491 12.4783 14.7491 13.9968C14.7491 15.5153 15.9798 16.746 17.4974 16.746C19.0149 16.746 20.2457 15.5153 20.2457 13.9968C20.2457 9.44139 16.5544 5.74922 12.0017 5.74922C7.44907 5.74922 3.75781 9.44139 3.75781 13.9968C3.75781 15.0122 3.87145 16.001 4.08038 16.954M8.49027 20.2989C7.23938 18.5138 6.50351 16.3419 6.50351 13.9968C6.50351 10.9599 8.96405 8.49844 11.9992 8.49844C15.0343 8.49844 17.4948 10.9599 17.4948 13.9968M17.7927 19.4806C17.6937 19.4861 17.5966 19.4953 17.4967 19.4953C14.4616 19.4953 12.0011 17.0338 12.0011 13.9969M19.6734 6.47682C17.7993 4.34802 15.0593 3 12.0004 3C8.94141 3 6.20138 4.34802 4.32734 6.47682" stroke="#" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+                </div>
+                <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                <button class="btn NationBtn"  type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div id="info-banner" class="container mt-2 mb-2">
+            <div class="row container d-flex justify-content-evenly">
+                <div class="col-4 d-flex justify-content-center">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13.1427 20.9999C10.8077 19.5438 9.25254 16.9522 9.25254 13.9968C9.25254 12.4783 10.4833 11.2476 12.0008 11.2476C13.5184 11.2476 14.7491 12.4783 14.7491 13.9968C14.7491 15.5153 15.9798 16.746 17.4974 16.746C19.0149 16.746 20.2457 15.5153 20.2457 13.9968C20.2457 9.44139 16.5544 5.74922 12.0017 5.74922C7.44907 5.74922 3.75781 9.44139 3.75781 13.9968C3.75781 15.0122 3.87145 16.001 4.08038 16.954M8.49027 20.2989C7.23938 18.5138 6.50351 16.3419 6.50351 13.9968C6.50351 10.9599 8.96405 8.49844 11.9992 8.49844C15.0343 8.49844 17.4948 10.9599 17.4948 13.9968M17.7927 19.4806C17.6937 19.4861 17.5966 19.4953 17.4967 19.4953C14.4616 19.4953 12.0011 17.0338 12.0011 13.9969M19.6734 6.47682C17.7993 4.34802 15.0593 3 12.0004 3C8.94141 3 6.20138 4.34802 4.32734 6.47682" stroke="#" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+                </div>
+                <div class="col-4 d-flex flex-column justify-content-center">
+                    <h3 class="depressed-font text-center">Welcome to 1Nation</h3>
+                    <p class="depressed-font text-center mt-3"> A Data Visualization Platform To Check The Vitals of the World.</p>
+                </div>
+                <div class="col-4 d-flex container-fluid">
+                    <div class="card" style="width: 25rem;">
+                    <img src="https://platform.vox.com/wp-content/uploads/sites/2/2025/11/Vox_PeteGamlen_AI.jpg?quality=90&strip=all&crop=0.0078125%2C0%2C99.984375%2C100&w=1440" class="card-img-top" alt="...">
+                    <div class="card-body" >
+                        <h5 class="card-title">Is AI being shoved down your throat at work? Here’s how to fight back.</h5>
+                        <p class="card-text">Artificial intelligence is everywhere. Overnight, it seems every company has scrambled to adopt AI tools.</p>
+                        <a href="https://www.vox.com/future-perfect/468672/how-to-fight-generative-ai" class="">Read</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container country-row mt-5">
+            <% for( let i = 0; i < nations.length; i++ ) { %>
+                <div class="countryholder ms-5">
+                    <img src="<%= nations[i].flagURL %>" class="img-fluid"/>
+                    <div class="container-fluid mt-3">
+                        <a class="text-center" href="/nation/<%= nations[i].isocode3 %>"><%= nations[i].isocode3 %></a>
+                    </div>
+                </div>
+            <% } %>
+            <!-- <div class="countryholder ms-2">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARMAAAC3CAMAAAAGjUrGAAAAJFBMVEX///8AJlTOESZ2f5QAGU7eeYDNABkVLlnQIDH++foAJFN5gJSsucTmAAABDElEQVR4nO3QgQ2AIBAEsBdBBPff1yku0aQdoXXE9LNyxtViyokTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHi5GsnO+a/JzNmP7VSarQ75gUnQ9hu1R7SHAAAAABJRU5ErkJggg==" class="img-fluid"/>
+                <div class="container-fluid mt-3">
+                    <h6 class="text-center"><a href="">FR</a></h6>
+                </div>
+            </div>
+            <div class="countryholder ms-5">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/2560px-Flag_of_Japan.svg.png" class="img-fluid"/>
+                <div class="container-fluid mt-3">
+                    <h6 class="text-center">JPN</h6>
+                </div>
+            </div>
+        </div> -->
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="/js/nation.js"></script>
+</body>
+</html>

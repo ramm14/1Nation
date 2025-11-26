@@ -27,7 +27,7 @@ app.set("views", path.join(__dirname, "/views"))
 
 
 
-mongoose.connect("mongodb://localhost:27017/NationDB").then(()=>{
+mongoose.connect("Insert Your MongoDB URI ").then(()=>{
     console.log("Connected to DB!")
 }).catch((err) =>{
     console.log("There was an error");

@@ -48,7 +48,7 @@ Before running this project, ensure you have the following installed and configu
 * Ensure MongoDB is running before starting the app.
 
 ### Run the application
-* Integrate personal API Keys & URIs into the project
+* Integrate personal URIs into the project
 * nodemon app.js
 * Add Countries through /addNation route 
 

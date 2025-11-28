@@ -2,7 +2,11 @@ const express = require('express');
 
 const { getRealGDPPerCapita , getYearlyRealGDPData, getAgeStructure } = require("./controller/nationLogic.js");
 
+require('dotenv').config();
 
+const { connectDB } = require("./Helper Functions/dbConnection.js");
+
+const { Nation } = require("./models/nationModel.js");
 
 const path = require("path");
 
@@ -10,7 +14,7 @@ const axios = require('axios');
 
 const mongoose = require('mongoose');
 
-const { Nation } = require("./models/nationModel.js");
+
 
 const app = express();
 
@@ -25,18 +29,19 @@ app.use(express.static(path.join(__dirname, "public")))
 app.set("views", path.join(__dirname, "/views"))
 
 
-
-
-mongoose.connect("mongodb://localhost:27017/NationDB").then(()=>{
-    console.log("Connected to DB!")
-}).catch((err) =>{
-    console.log("There was an error");
-    console.log(err);
+app.use((req, res, next) => {
+    res.locals.isDBConnected = true;
+    next();
 })
+
+connectDB().then(() => console.log("DB Connected")).catch((err) => console.log("DB Connection Error: ", err));
+
+
 
 app.get("/", async (req, res) => {
     try{
-        
+        const currentDBStatus = res.locals.isDBConnected;
+        res.locals.isDBConnected = await connectDB(currentDBStatus);
         // const response = await axios.get('https://newsapi.org/v2/top-headlines?country=us&apiKey=c8c9d77842324fcf9d43dd747388ca5f');
         // const articles = response.data.articles;
         // const topStory = articles[1];
@@ -48,24 +53,32 @@ app.get("/", async (req, res) => {
 })
 
 app.get("/nation/:isocode3", async (req, res) => {
+    const currentDBStatus = res.locals.isDBConnected;
+    res.locals.isDBConnected = await connectDB(currentDBStatus);
     const nationCode = req.params.isocode3
     const nation = await Nation.findOne({isocode3:nationCode})
     res.render("Nation" , { nation:nation });
 });
 
 app.get("/gdpPerCapita/:isocode3", async (req, res) => {
+    const currentDBStatus = res.locals.isDBConnected;
+    res.locals.isDBConnected = await connectDB(currentDBStatus);
     const iso3 = req.params.isocode3;
     const gdpPerCapitaData = await getRealGDPPerCapita(iso3);
     res.json(gdpPerCapitaData);
 })
 
 app.get("/yearlyGDP/:isocode3", async (req, res) => {
+    const currentDBStatus = res.locals.isDBConnected;
+    res.locals.isDBConnected = await connectDB(currentDBStatus);
     const iso3 = req.params.isocode3;
     const yearlyGDPData = await getYearlyRealGDPData(iso3);
     res.json(yearlyGDPData);
 })
 
 app.get("/ageStructure/:isocode3", async (req, res) => {
+    const currentDBStatus = res.locals.isDBConnected;
+    res.locals.isDBConnected = await connectDB(currentDBStatus);
     const iso3 = req.params.isocode3;
     const ageStructureData = await getAgeStructure(iso3);
     res.json(ageStructureData);
@@ -76,6 +89,8 @@ app.get("/addNation", async(req,res)=>{
 })
 
 app.post("/addNation", async(req, res)=>{
+    const currentDBStatus = res.locals.isDBConnected;
+    res.locals.isDBConnected = await connectDB(currentDBStatus);
     console.log(req.body);
     const countryInformation = req.body;
     await Nation.insertOne({name:countryInformation.countryName , isocode3:countryInformation.isoCode3, flagURL:countryInformation.flagURL})

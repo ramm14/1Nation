@@ -12,6 +12,9 @@ section{
     height: 25vh;
 }
 
+#warning-header{
+    color:#CF0F47
+}
 
 .navbar{
     background-color: rgb(0, 0, 15);

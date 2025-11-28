@@ -13,7 +13,8 @@ section{
 }
 
 #warning-header{
-    color:#CF0F47
+    color:#CF0F47;
+    font-size: 75%;
 }
 
 .navbar{

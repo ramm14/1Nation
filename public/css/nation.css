@@ -134,3 +134,79 @@ section{
     text-shadow: 0 1px 0 black;
 }
 
+@media (max-width:576px) {
+    #info-banner .card {
+        display: none;
+    }
+    #info-banner{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 50%;
+        width: 75%;
+        height: 18vh;
+        margin-left: 11% ;
+    }
+    #info-banner h3{
+        margin-top: 50%;
+        font-size: 15px;
+    }
+    #info-banner p{
+        display: none;
+    }
+    #info-banner svg{
+        display: none;
+    }
+   .navbar .d-flex input{
+        display: none;
+    }
+   .navbar .d-flex button {
+        display: none;
+    }
+    .country-row{
+        display: flex;
+        margin-left: 11%;
+        flex-direction: column;
+
+    }
+    .countryholder img {
+        border-radius: 15px;
+        height: 12vh;
+    }
+    #first-row{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+    #second-row{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #first-row .container-fluid {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    #first-row .graph-container{
+        margin-left: 0%;
+    }
+}
+@media (max-width:768px) {
+    #info-banner .card {
+        visibility: hidden;
+    }
+    #info-banner p{
+        font-size: 12px;
+    }
+    #info-banner svg{
+        display: none;
+    }
+   .navbar .d-flex input{
+        display: none;
+    }
+   .navbar .d-flex button {
+        display: none;
+    }
+}

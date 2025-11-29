@@ -14,6 +14,12 @@ const axios = require('axios');
 
 const mongoose = require('mongoose');
 
+const { Redis } = require('@upstash/redis');
+
+const redis = new Redis({
+  url: 'https://one-squid-25693.upstash.io',
+  token: process.env.REDISTOKEN,
+})
 
 
 const app = express();
@@ -35,8 +41,6 @@ app.use((req, res, next) => {
 })
 
 connectDB().then(() => console.log("DB Connected")).catch((err) => console.log("DB Connection Error: ", err));
-
-
 
 app.get("/", async (req, res) => {
     try{
@@ -64,24 +68,51 @@ app.get("/gdpPerCapita/:isocode3", async (req, res) => {
     const currentDBStatus = res.locals.isDBConnected;
     res.locals.isDBConnected = await connectDB(currentDBStatus);
     const iso3 = req.params.isocode3;
-    const gdpPerCapitaData = await getRealGDPPerCapita(iso3);
-    res.json(gdpPerCapitaData);
+    const key = req.path;
+    const cacheNationData = await redis.get(key);
+    if (cacheNationData) {
+        return res.json(cacheNationData);
+        
+    }
+    else{
+        const gdpPerCapitaData = await getRealGDPPerCapita(iso3);
+        await redis.set(key, JSON.stringify(gdpPerCapitaData));
+        return res.json(gdpPerCapitaData);
+    }
+
 })
 
 app.get("/yearlyGDP/:isocode3", async (req, res) => {
     const currentDBStatus = res.locals.isDBConnected;
     res.locals.isDBConnected = await connectDB(currentDBStatus);
     const iso3 = req.params.isocode3;
-    const yearlyGDPData = await getYearlyRealGDPData(iso3);
-    res.json(yearlyGDPData);
+    const key = req.path;
+    const cacheNationData= await redis.get(key);
+    if (cacheNationData) {
+        return res.json(cacheNationData);
+    }
+    else{
+        const yearlyGDPData = await getYearlyRealGDPData(iso3);
+        await redis.set(key, JSON.stringify(yearlyGDPData));
+        return res.json(yearlyGDPData);
+    }
 })
 
 app.get("/ageStructure/:isocode3", async (req, res) => {
     const currentDBStatus = res.locals.isDBConnected;
     res.locals.isDBConnected = await connectDB(currentDBStatus);
     const iso3 = req.params.isocode3;
-    const ageStructureData = await getAgeStructure(iso3);
-    res.json(ageStructureData);
+    const key = req.path;
+    const cacheNationData = await redis.get(key);
+    if (cacheNationData) {
+        return res.json(cacheNationData);
+    }
+    else{
+        const ageStructureData = await getAgeStructure(iso3);
+        await redis.set(key, JSON.stringify(ageStructureData));
+        return res.json(ageStructureData);
+    }
+
 })
 
 app.get("/addNation", async(req,res)=>{

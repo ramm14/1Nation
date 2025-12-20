@@ -49,8 +49,17 @@ app.get("/", async (req, res) => {
         // const response = await axios.get('https://newsapi.org/v2/top-headlines?country=us&apiKey=c8c9d77842324fcf9d43dd747388ca5f');
         // const articles = response.data.articles;
         // const topStory = articles[1];
-        const nations =  await Nation.find({});
-        res.render("Homepage" , { nations });
+        const key = req.path;
+        const cacheNationData = await redis.get(key);
+        if (cacheNationData) {
+            console.log(cacheNationData);
+            return res.render("Homepage" , { nations: cacheNationData });
+        }
+        else{
+            const nations =  await Nation.find({});
+            await redis.set(key, JSON.stringify(nations));
+            return res.render("Homepage" , { nations: nations });
+        }
     }catch(err){
         console.log(err);
     }
@@ -64,6 +73,31 @@ app.get("/nation/:isocode3", async (req, res) => {
     res.render("Nation" , { nation:nation });
 });
 
+app.post("/search", async (req, res) => {
+    const nationName = req.body.nationName;
+    const formattedName =  nationName.charAt(0).toUpperCase() + nationName.slice(1)
+    const nation = await Nation.findOne({name:formattedName});
+    if(!nation){
+        return res.redirect("/"); 
+    }
+    const nationCode = nation.isocode3;
+    res.redirect(`/nation/${nationCode}`);
+});
+
+app.get("/addNation", async(req, res)=>{
+    res.render("AddCountries");
+})
+
+app.post("/addNation", async(req, res)=>{
+    const currentDBStatus = res.locals.isDBConnected;
+    res.locals.isDBConnected = await connectDB(currentDBStatus);
+    console.log(req.body);
+    const countryInformation = req.body;
+    await Nation.insertOne({name:countryInformation.countryName , isocode3:countryInformation.isoCode3, flagURL:countryInformation.flagURL})
+    res.redirect("/");
+})
+
+// API ENDPOINTS 
 app.get("/gdpPerCapita/:isocode3", async (req, res) => {
     const currentDBStatus = res.locals.isDBConnected;
     res.locals.isDBConnected = await connectDB(currentDBStatus);
@@ -115,19 +149,7 @@ app.get("/ageStructure/:isocode3", async (req, res) => {
 
 })
 
-app.get("/addNation", async(req,res)=>{
-    res.render("AddCountries");
-})
 
-app.post("/addNation", async(req, res)=>{
-    const currentDBStatus = res.locals.isDBConnected;
-    res.locals.isDBConnected = await connectDB(currentDBStatus);
-    console.log(req.body);
-    const countryInformation = req.body;
-    await Nation.insertOne({name:countryInformation.countryName , isocode3:countryInformation.isoCode3, flagURL:countryInformation.flagURL})
-    res.redirect("/");
-
-})
 
 
 

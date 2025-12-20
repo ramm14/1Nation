@@ -18,7 +18,9 @@ Transform the extracted API Data and make it accessible through an API Endpoint.
 
 Visualize the data with ChartJS 
 
-Store relevant country information in MongoDB database to execute API Calls. 
+Store relevant country information in MongoDB database to execute API Calls . 
+
+Caching was implemented with Redis. 
 
 
 

@@ -68,9 +68,18 @@ app.get("/", async (req, res) => {
 app.get("/nation/:isocode3", async (req, res) => {
     const currentDBStatus = res.locals.isDBConnected;
     res.locals.isDBConnected = await connectDB(currentDBStatus);
+    const key = req.path;
+    const cacheNationData = await redis.get(key);
     const nationCode = req.params.isocode3
-    const nation = await Nation.findOne({isocode3:nationCode})
-    res.render("Nation" , { nation:nation });
+    if (cacheNationData) {
+        console.log(cacheNationData);
+        return res.render("Nation" , { nation: cacheNationData });
+    }
+    else{
+        const nation = await Nation.findOne({isocode3:nationCode});
+        await redis.set(key, JSON.stringify(nation));
+        return res.render("Nation" , { nation:nation });
+    }
 });
 
 app.post("/search", async (req, res) => {

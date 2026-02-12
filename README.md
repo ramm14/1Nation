@@ -1,9 +1,9 @@
-# 1Nation :newspaper_roll:
+# 1Nation 
 1Nation is a data visualization platform that provides quick and accessible views of the economic performance of various countries.
 
 I’ve recently gotten really interested in geopolitics and international affairs, so I decided to channel that curiosity into a visualization project that compares different countries in an engaging way. 
 
-## Tech Stack :hammer_and_wrench:
+## Tech Stack 
 Backend : NodeJS , ExpressJS  \
 Database : MongoDB (Moongoose) \
 Frontend: Bootstrap , HTML , CSS \

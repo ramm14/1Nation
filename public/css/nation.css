@@ -17,6 +17,15 @@ section{
     font-size: 75%;
 }
 
+.finger-icon{
+    margin-right: 20px;
+}
+
+.navbar-header{
+    display: flex;
+    align-items: center;
+}
+
 .navbar{
     background-color: rgb(0, 0, 15);
 }
@@ -26,7 +35,6 @@ section{
     flex-direction: row;
     justify-content: flex-start;
     flex-wrap: wrap;
-
 }
 
 .countryholder{

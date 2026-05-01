@@ -163,6 +163,6 @@ app.get("/ageStructure/:isocode3", async (req, res) => {
 
 
 app.listen(3006,() => {
-    console.log("Server is running on port 3006");
+    console.log("Server is running on port localhost:3006");
 })
 

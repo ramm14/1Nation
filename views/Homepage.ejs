@@ -49,12 +49,15 @@
         </div>
         <div class="container country-row mt-5">
             <% for( let i = 0; i < nations.length; i++ ) { %>
-                <div class="countryholder ms-5">
-                    <img src="<%= nations[i].flagURL %>" class="img-fluid"/>
-                    <div class="container-fluid mt-3">
-                        <a class="text-center" href="/nation/<%= nations[i].isocode3 %>"><%= nations[i].isocode3 %></a>
+                <a class="flashcard" href="/nation/<%= nations[i].isocode3 %>">
+                    <div class="flashcard-flag">
+                        <%- include('partials/flag', { nation: nations[i] }) %>
                     </div>
-                </div>
+                    <div class="flashcard-body">
+                        <span class="flashcard-name"><%= nations[i].name %></span>
+                        <span class="flashcard-code"><%= nations[i].isocode3 %></span>
+                    </div>
+                </a>
             <% } %>
             <!-- <div class="countryholder ms-2">
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARMAAAC3CAMAAAAGjUrGAAAAJFBMVEX///8AJlTOESZ2f5QAGU7eeYDNABkVLlnQIDH++foAJFN5gJSsucTmAAABDElEQVR4nO3QgQ2AIBAEsBdBBPff1yku0aQdoXXE9LNyxtViyokTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHixIkTJ06cOHHi5GsnO+a/JzNmP7VSarQ75gUnQ9hu1R7SHAAAAABJRU5ErkJggg==" class="img-fluid"/>

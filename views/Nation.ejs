@@ -31,7 +31,7 @@
                 <div class="container-fluid d-inline-flex">
                     <div class=" graph-container d-inline-flex justify-content-center "  >
                         <div class="card nation-summary mt-5" style="width: 18rem; ">
-                            <img src="<%= nation.flagURL %>" class="card-img-top nation-page-flag" alt="...">
+                            <%- include('partials/flag', { nation: nation, className: 'card-img-top nation-page-flag', lazy: false }) %>
                             <div class="card-body mt-2">
                                 <h5 class="card-title text-center"><%= nation.name %></h5>
                                  <p id="isocodeHolder" style="display: none;"><%= nation.isocode3 %> </p>

@@ -1,0 +1,14 @@
+<%#
+  Flag image that never shows as broken.
+  Locals: nation (required), className (optional), lazy (optional, default true)
+  If the flagcdn image fails, it tries the nation's stored flagURL once, then the local placeholder.
+%><% const flag = flagFor(nation); %><img
+    src="<%= flag.src %>"
+    <% if (flag.srcset) { %>srcset="<%= flag.srcset %>"<% } %>
+    <% if (flag.fallback) { %>data-fallback="<%= flag.fallback %>"<% } %>
+    alt="Flag of <%= nation.name %>"
+    <% if (typeof className !== 'undefined' && className) { %>class="<%= className %>"<% } %>
+    <% if (typeof lazy === 'undefined' || lazy) { %>loading="lazy"<% } %>
+    decoding="async"
+    onerror="this.removeAttribute('srcset');if(this.dataset.fallback&&!this.dataset.triedFallback){this.dataset.triedFallback='1';this.src=this.dataset.fallback;}else{this.onerror=null;this.src='/imgs/flag-placeholder.svg';}"
+/>

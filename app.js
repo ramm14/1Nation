@@ -8,6 +8,8 @@ const { connectDB } = require("./Helper Functions/dbConnection.js");
 
 const { Nation } = require("./models/nationModel.js");
 
+const { flagFor } = require("./Helper Functions/flags.js");
+
 const path = require("path");
 
 const axios = require('axios');
@@ -22,6 +24,10 @@ const redis = new Redis({
 })
 
 
+// Cache lifetimes (seconds) so stale entries expire on their own
+const PAGE_CACHE_TTL = 60 * 60 * 24;     // 1 day: homepage list & nation pages
+const DATA_CACHE_TTL = 60 * 60 * 24 * 7; // 7 days: World Bank indicator data
+
 const app = express();
 
 app.set("view engine","ejs");
@@ -33,6 +39,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")))
 
 app.set("views", path.join(__dirname, "/views"))
+
+app.locals.flagFor = flagFor; // available in every EJS view
 
 
 app.use((req, res, next) => {
@@ -57,29 +65,33 @@ app.get("/", async (req, res) => {
         }
         else{
             const nations =  await Nation.find({});
-            await redis.set(key, JSON.stringify(nations));
+            await redis.set(key, JSON.stringify(nations), { ex: PAGE_CACHE_TTL });
             return res.render("Homepage" , { nations: nations });
         }
     }catch(err){
         console.log(err);
+        res.status(500).send("Something went wrong loading the homepage.");
     }
 })
 
 app.get("/nation/:isocode3", async (req, res) => {
     const currentDBStatus = res.locals.isDBConnected;
     res.locals.isDBConnected = await connectDB(currentDBStatus);
-    const key = req.path;
+    const nationCode = req.params.isocode3.trim().toUpperCase();
+    if (req.params.isocode3 !== nationCode) {
+        return res.redirect(`/nation/${nationCode}`); // one canonical URL (and cache key) per nation
+    }
+    const key = `/nation/${nationCode}`;
     const cacheNationData = await redis.get(key);
-    const nationCode = req.params.isocode3
     if (cacheNationData) {
-        console.log(cacheNationData);
         return res.render("Nation" , { nation: cacheNationData });
     }
-    else{
-        const nation = await Nation.findOne({isocode3:nationCode});
-        await redis.set(key, JSON.stringify(nation));
-        return res.render("Nation" , { nation:nation });
+    const nation = await Nation.findOne({isocode3:nationCode});
+    if (!nation) {
+        return res.redirect("/"); // unknown nation: don't render (or cache) an empty page
     }
+    await redis.set(key, JSON.stringify(nation), { ex: PAGE_CACHE_TTL });
+    return res.render("Nation" , { nation:nation });
 });
 
 app.post("/search", async (req, res) => {
@@ -102,7 +114,9 @@ app.post("/addNation", async(req, res)=>{
     res.locals.isDBConnected = await connectDB(currentDBStatus);
     console.log(req.body);
     const countryInformation = req.body;
-    await Nation.insertOne({name:countryInformation.countryName , isocode3:countryInformation.isoCode3, flagURL:countryInformation.flagURL})
+    const isocode3 = countryInformation.isoCode3.trim().toUpperCase();
+    await Nation.insertOne({name:countryInformation.countryName.trim() , isocode3, flagURL:countryInformation.flagURL})
+    await redis.del("/", `/nation/${isocode3}`); // clear cached pages so the new nation shows up
     res.redirect("/");
 })
 
@@ -119,7 +133,7 @@ app.get("/gdpPerCapita/:isocode3", async (req, res) => {
     }
     else{
         const gdpPerCapitaData = await getRealGDPPerCapita(iso3);
-        await redis.set(key, JSON.stringify(gdpPerCapitaData));
+        await redis.set(key, JSON.stringify(gdpPerCapitaData), { ex: DATA_CACHE_TTL });
         return res.json(gdpPerCapitaData);
     }
 
@@ -136,7 +150,7 @@ app.get("/yearlyGDP/:isocode3", async (req, res) => {
     }
     else{
         const yearlyGDPData = await getYearlyRealGDPData(iso3);
-        await redis.set(key, JSON.stringify(yearlyGDPData));
+        await redis.set(key, JSON.stringify(yearlyGDPData), { ex: DATA_CACHE_TTL });
         return res.json(yearlyGDPData);
     }
 })
@@ -152,7 +166,7 @@ app.get("/ageStructure/:isocode3", async (req, res) => {
     }
     else{
         const ageStructureData = await getAgeStructure(iso3);
-        await redis.set(key, JSON.stringify(ageStructureData));
+        await redis.set(key, JSON.stringify(ageStructureData), { ex: DATA_CACHE_TTL });
         return res.json(ageStructureData);
     }
 
